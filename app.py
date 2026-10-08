@@ -1,14 +1,30 @@
-From flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session
 
 app = Flask(__name__)
-app.secret_key  = "senha secreta"
+app.secret_key = "senha secreta"
 
 @app.route('/')
 def index():
-if'lista' not in session:
-    session ['lista'] = []
-return render_template('tarefas.html' , lista=session['lista'])
+    if 'lista' not in session:
+        print("limpando...")
+        session['lista'] = []
+        print(session['lista'])
+    return render_template('Tarefas.html', lista=session['lista'])
 
+@app.route('/add', methods=['POST'])
+def adicionar():
+    nova = request.form.get('nova')
+    lista = session['lista']
+    lista.append(nova)
+    session['lista'] = lista
+    return redirect('/')
 
-if__name__ == "__main__":
+@app.route('/delete/<int:indice>')
+def remover(indice):
+    lista = session['lista']
+    lista.pop(indice)
+    session['lista'] = lista
+    return redirect('/')
+
+if __name__ == "__main__":
     app.run(debug=True)

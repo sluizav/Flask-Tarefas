@@ -1,15 +1,23 @@
-<!doctype html>
-    <html lang="pt-BR">
-        <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial=scale=1">
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
         <title>Minhas Tarefas</title>
-        <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
     </head> 
     <body>
+         <h1>lista de tarefas</h1>
+         {% if lista %}
+         <ol>
+            {% for tarefa in lista %}
+            <li>{{ item }}</li>
+                <a href="/delete/{{loop.index0}}"><button>🗑️</button></a>
+            {% endfor %}
+         </ol>
+         {% else %}
+            <p>Nenhuma tarefa cadastrada.</p>
+         {% endif %}
         <form action="/add" method="post">
-            <input type="text" name="tarefa" placeholder="Nova tarefa">
+            <input type="text" name="nova">
             <button type="submit">Adicionar</button> 
-        
+        </form>  
     </body>
     </html>
